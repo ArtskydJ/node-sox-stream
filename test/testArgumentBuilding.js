@@ -12,7 +12,7 @@ function deepEqual(t, description, obj, arr) {
 	})
 }
 
-test('argument parsing', function (t) {
+test('argument building', function (t) {
 	deepEqual(t, 'short arguments with number values', {
 		x: 2,
 		v: 50,

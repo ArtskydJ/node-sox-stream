@@ -1,6 +1,6 @@
 var spawn = require('child_process').spawn
 var duplexer = require('duplexer')
-var objToArgArray = require('./options.js')
+var objToArgArray = require('./objToArgArray.js')
 
 module.exports = function job(options, soxPath) {
 	var sox = spawn(soxPath || 'sox', objToArgArray(options))

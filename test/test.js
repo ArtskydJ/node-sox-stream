@@ -1,9 +1,9 @@
 var test = require('tap').test
+var objToArgArray = require('../options.js')
 
 function deepEqual(t, description, obj, arr) {
 	t.test(description, function (t) {
-		var args = require('../options.js')
-		var result = args(obj)
+		var result = objToArgArray(obj)
 		t.equal(result.length, arr.length, 'lengths are equal')
 		arr.forEach(function (r) {
 			t.notEqual(result.indexOf(r), -1, r + ' expected')

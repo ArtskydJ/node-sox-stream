@@ -1,28 +1,34 @@
 {
-    "name": "sox-stream",
-    "version": "0.0.1",
-    "description": "A stream-only wrapper around sox",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ArtskydJ/sox-stream.git"
-    },
-    "keywords": [
-        "sox",
-        "audio",
-        "sound",
-        "stream",
-        "sux",
-        "transcode",
-        "convert"
-    ],
-    "author": "Joseph Dykstra",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/ArtskydJ/sox-stream/issues"
-    },
-    "homepage": "https://github.com/ArtskydJ/sox-stream"
+  "name": "sox-stream",
+  "version": "0.0.1",
+  "description": "A stream-only wrapper around sox",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ArtskydJ/sox-stream.git"
+  },
+  "keywords": [
+    "sox",
+    "audio",
+    "sound",
+    "stream",
+    "sux",
+    "transcode",
+    "convert"
+  ],
+  "author": "Joseph Dykstra",
+  "license": "VOL",
+  "bugs": {
+    "url": "https://github.com/ArtskydJ/sox-stream/issues"
+  },
+  "homepage": "https://github.com/ArtskydJ/sox-stream",
+  "devDependencies": {
+    "tap": "^0.4.13"
+  },
+  "dependencies": {
+    "duplexer": "^0.1.1"
+  }
 }

@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/ArtskydJ/sox-stream",
   "devDependencies": {
+    "concat-stream": "^1.4.7",
     "tap": "^0.4.13"
   },
   "dependencies": {

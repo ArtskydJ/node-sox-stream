@@ -1,7 +1,7 @@
 module.exports = function args(options) {
-	return Object.keys(options).map(function (option) {
-		return prependDashes(option) + ' ' + options[option]
-	})
+	return Object.keys(options).reduce(function (compiled, option) {
+		return compiled.concat(prependDashes(option), options[option])
+	}, [])
 }
 
 function prependDashes(option) {

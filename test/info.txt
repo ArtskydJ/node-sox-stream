@@ -1,7 +1,0 @@
-sox 14.4.1
-
-sox 0758.ogg -t wav 0759.wav
-6be0b3b38fe6aec65e3efac609ab4352
-
-sox 0868.ogg -t wav -b 16 -c 1 -r 44100 -C 5 0869.wav
-de552a665cf851133689fe8e4da6de59

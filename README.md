@@ -1,9 +1,7 @@
 sox-stream
 ==========
 
-A stream-friendly wrapper around [SoX](http://sox.sourceforge.net/).
-
-Transcode audio streams easily.
+A stream-friendly wrapper around [SoX](http://sox.sourceforge.net/). Transcode audio streams easily!
 
 why
 ===
@@ -12,6 +10,17 @@ The other implementations I found were klunky to use; this has an extremely easy
 
 examples
 ========
+
+Lower volume:
+```js
+var Sox = require('sox-stream')
+var fs  = require('fs')
+
+var src = fs.createReadStream('loud.flac')
+var sox = Sox({ volume: 0.8 }, {})
+var dst = fs.createWriteStream('quiet.flac')
+src.pipe(sox).pipe(dst)
+```
 
 Transcode:
 ```js
@@ -33,17 +42,6 @@ sox.on('error', function (err) {
 })
 ```
 
-Lower volume:
-```js
-var Sox = require('sox-stream')
-var fs  = require('fs')
-
-var src = fs.createReadStream('loud.flac')
-var sox = Sox({ volume: 0.8 }, {})
-var dst = fs.createWriteStream('quiet.flac')
-src.pipe(sox).pipe(dst)
-```
-
 #sox([soxInputOpts], soxOutputOpts, [soxPath])
 
 - `soxInputOpts` is an object, and is optional. These options will be used to interpret the incoming stream.
@@ -52,18 +50,18 @@ src.pipe(sox).pipe(dst)
 
 Returns a transform (a.k.a. through) stream. The stream also emits 'error' events when there is an error.
 
-(If you don't know how to use streams, I recommend reading the [stream handbook](https://github.com/substack/stream-handbook).)
+(If you don't know how to use streams, I recommend reading the [stream handbook][stream-handbook].)
 
 ###sox features that are not supported
 - **effects** - Might support if there is demand for it. Create an issue if you *literally* can't live without this feature. If you're feeling generous, you could make a pull request.
-- **read from local file** - Just do: `fs.createReadStream().pipe(sox).pipe(dst)`.
-- **write to local file** - Just do: `src.pipe(sox).pipe(fs.createWriteStream('filename.wav'))`.
+- **read from local file** - Just do: `fs.createReadStream('src.ogg').pipe(sox).pipe(dst)`.
+- **write to local file** - Just do: `src.pipe(sox).pipe(fs.createWriteStream('dst.wav'))`.
 
 #options
 
 The common options are listed below.
 
-The rest of the options are listed in [options.md](https://github.com/ArtskydJ/sox-stream/blob/master/options.md).
+The rest of the options are listed in [options.md][more-opts].
 
 ###input and output:
 
@@ -71,10 +69,10 @@ If you use these options on `soxInputOpts`, they will be used to interpret the i
 
 Most likely you will want to use these on `soxOutputOpts`. Then they will be used to format the outgoing stream.
 
-- [`b` or `bits`](https://en.wikipedia.org/wiki/Audio_bit_depth), **number**, bit depth. E.g. `16`. (Not applicable to complex encodings such as MP3 or GSM.)
-- [`c` or `channels`](https://en.wikipedia.org/wiki/Audio_channel), **number**, number of channels. E.g. `2` for stereo.
-- [`r` or `rate`](https://en.wikipedia.org/wiki/Sampling_(signal_processing)#Sampling_rate), **number**, sample rate. E.g. `44100`.
-- [`t` or `type`](https://en.wikipedia.org/wiki/Audio_file_format), **string**, file type. E.g. `'wav'`. This property is required by `soxOutputOpts`, and is suggested for `soxInputOpts`.
+- [`b` or `bits`][bitdepth-arg], **number**, bit depth. E.g. `16`. (Not applicable to complex encodings such as MP3 or GSM.)
+- [`c` or `channels`][channel-arg], **number**, number of channels. E.g. `2` for stereo.
+- [`r` or `rate`][samplerate-arg], **number**, sample rate. E.g. `44100`.
+- [`t` or `type`][type-arg], **string**, file type. E.g. `'wav'`. This property is required by `soxOutputOpts`, and is suggested for `soxInputOpts`.
 
 ###input-only:
 
@@ -86,10 +84,16 @@ Most likely you will want to use these on `soxOutputOpts`. Then they will be use
 
 #install
 
-Install with npm: 
+Install [SoX 14.4.1a][sox-latest]. Then install this package with npm: 
 
 ```
 npm install sox-stream
+```
+
+To run the tests, you must clone the [git repository](https://github.com/ArtskydJ/sox-stream). You must also put SoX  in your `PATH`. Then run:
+
+```
+npm test
 ```
 
 #codec support
@@ -97,7 +101,7 @@ npm install sox-stream
 ###FLAC
 
 - **Problem:** FLAC was disabled accidentally in 14.4.1 (SourceForge default). [[Stack Overflow](http://stackoverflow.com/questions/23382500/how-to-install-flac-support-flac-libraries-to-sox-in-windows/25755799)]
-- **Solution:** Install [SoX 14.4.1a](http://sourceforge.net/projects/sox/files/sox/14.4.1/sox-14.4.1a-win32.exe/download).
+- **Solution:** Install [SoX 14.4.1a][sox-latest].
 
 ###MP3
 
@@ -109,14 +113,14 @@ npm install sox-stream
 	- [Ubuntu (How-To)](http://eggblog.invertedegg.com/?p=19)
 	- [CentOS (How-To)](http://techblog.netwater.com/?p=4)
 
-#run tests
-
-To run the tests, you must clone the git repository. You must also install SoX and put it in your `PATH`.
-
-```
-npm test
-```
-
 #license
 
 [VOL](http://veryopenlicense.com)
+
+[sox-latest]: http://sourceforge.net/projects/sox/files/sox/14.4.1/sox-14.4.1a-win32.exe/download
+[bitdepth-arg]: https://en.wikipedia.org/wiki/Audio_bit_depth
+[channel-arg]: https://en.wikipedia.org/wiki/Audio_channel
+[samplerate-arg]: https://en.wikipedia.org/wiki/Sampling_(signal_processing)#Sampling_rate
+[type-arg]: https://en.wikipedia.org/wiki/Audio_file_format
+[stream-handbook]: https://github.com/substack/stream-handbook
+[more-opts]: https://github.com/ArtskydJ/sox-stream/blob/master/options.md

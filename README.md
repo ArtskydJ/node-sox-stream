@@ -37,7 +37,6 @@ var fs  = require('fs')
 var sox = Sox({ //input
 	volume: 0.8
 }, { //output
-	channels: 2,
 	type: 'mp3'
 })
 
@@ -61,9 +60,11 @@ Returns a transform (a.k.a. through) stream. The stream also emits 'error' event
 - **effects** - Might support if there is demand for it. Create an issue if you *literally* can't live without this feature. If you're feeling generous, you could make a pull request.
 - **file system i/o** - The point of this module is to simplify sox usage. If your use case involves local files, you can use `fs.createReadStream().pipe(sox)`.
 
-#common options
+#options
 
 The common options are listed below.
+
+The rest of the options are listed in [options.md](https://github.com/ArtskydJ/sox-stream/blob/master/options.md).
 
 ###input and output:
 
@@ -84,10 +85,6 @@ Most likely you will want to use these on `soxOutputOpts`. Then they will be use
 
 - `C` or `compression`, **integer** usually, compression level. 0 = low compression (large file size).
 
-#uncommon options
-
-I forgot to fill this section out, which is why you're seeing this. Sorry; create an issue if you want me to fix it.
-
 #install
 
 Install with npm: 
@@ -95,6 +92,23 @@ Install with npm:
 ```
 npm install sox-stream
 ```
+
+#codec support
+
+###FLAC
+
+- **Problem:** FLAC was disabled accidentally in 14.4.1 (SourceForge default). [[Stack Overflow](http://stackoverflow.com/questions/23382500/how-to-install-flac-support-flac-libraries-to-sox-in-windows/25755799)]
+- **Solution:** Install [SoX 14.4.1a](http://sourceforge.net/projects/sox/files/sox/14.4.1/sox-14.4.1a-win32.exe/download).
+
+###MP3
+
+- **Problem:** MP3 is [proprietary](https://en.wikipedia.org/wiki/LAME#Patents_and_legal_issues). It's really lame and makes me mad.
+- **Solution:** Get the [Fraunhofer Society](https://en.wikipedia.org/wiki/Fraunhofer_Society#Notable_projects) to release MP3 under an open source license. Or, more realistically; compile the [LAME](http://lame.sourceforge.net/) encoder, and/or the [MAD](http://www.underbit.com/products/mad) decoder.
+- **Links:** Mp3 support on:
+	- [Precompiled Windows](https://github.com/EaterOfCode/sux/tree/master/win_libs)
+	- [Windows](http://www.codeproject.com/Articles/33901/Compiling-SOX-with-Lame-and-Libmad-for-Windows)
+	- [Ubuntu](http://eggblog.invertedegg.com/?p=19)
+	- [CentOS](http://techblog.netwater.com/?p=4)
 
 #run tests
 

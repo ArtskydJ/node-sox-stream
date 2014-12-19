@@ -41,12 +41,3 @@ function callSox(soxFile, inputOpts, outputOpts, tempFileName) {
 	var args = [].concat( toArgs(inputOpts), tempFileName, toArgs(outputOpts), '-' )
 	return cp.spawn(soxFile, args)
 }
-
-
-
-/*
-file stream comes in
-written to disk
-sox converts and writes output to a stream
-
-*/

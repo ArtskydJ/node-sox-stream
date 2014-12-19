@@ -104,11 +104,11 @@ npm install sox-stream
 
 - **Problem:** MP3 is [proprietary](https://en.wikipedia.org/wiki/LAME#Patents_and_legal_issues). It's really lame and makes me mad.
 - **Solution:** Get the [Fraunhofer Society](https://en.wikipedia.org/wiki/Fraunhofer_Society#Notable_projects) to release MP3 under an open source license. Or, more realistically; compile the [LAME](http://lame.sourceforge.net/) encoder, and/or the [MAD](http://www.underbit.com/products/mad) decoder.
-- **Links:** Mp3 support on:
-	- [Precompiled Windows](https://github.com/EaterOfCode/sux/tree/master/win_libs)
-	- [Windows](http://www.codeproject.com/Articles/33901/Compiling-SOX-with-Lame-and-Libmad-for-Windows)
-	- [Ubuntu](http://eggblog.invertedegg.com/?p=19)
-	- [CentOS](http://techblog.netwater.com/?p=4)
+- **Links:**
+	- [Windows (Precompiled)](https://github.com/EaterOfCode/sux/tree/master/win_libs)
+	- [Windows (How-To)](http://www.codeproject.com/Articles/33901/Compiling-SOX-with-Lame-and-Libmad-for-Windows)
+	- [Ubuntu (How-To)](http://eggblog.invertedegg.com/?p=19)
+	- [CentOS (How-To)](http://techblog.netwater.com/?p=4)
 
 #run tests
 

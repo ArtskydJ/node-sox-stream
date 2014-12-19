@@ -59,6 +59,14 @@ test('ogg > wav - short', function (t) {
 		.pipe(assertSize(t, 138636))
 })
 
+test('ogg > wav - no inputOpts - short', function (t) {
+	var sox = Sox({ t: 'wav' })
+	sox.on('error', handle(t))
+	fs.createReadStream(relativePath('audio/test_1.ogg'))
+		.pipe(sox)
+		.pipe(assertSize(t, 138636))
+})
+
 test('ogg > wav - options - short - too loud', function (t) {
 	t.plan(2)
 	var sox = Sox({ type: 'ogg' }, {
@@ -94,7 +102,6 @@ test('ogg > wav - options - short - adjusted volume', function (t) {
 		.pipe(assertSize(t, 2724056))
 })
 
-//FAILING
 test('ogg > mp3 - long', {timeout: 50000}, function (t) {
 	var sox = Sox({ type: 'ogg' }, { type: 'mp3' })
 	sox.on('error', handle(t))

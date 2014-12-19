@@ -2,7 +2,7 @@ These options are copied from the help text displayed when running `sox -h`.
 
 If you want an exhaustive list of each option in depth, take a look at the [SoX docs](http://sox.sourceforge.net/sox.html#OPTIONS).
 
-#GLOBAL OPTIONS
+#Global Options
 
 The global options can be passed to `inputOpts` or `outputOpts`, it doesn't matter.
 
@@ -37,12 +37,12 @@ Some options are for multiple files (e.g. `-m`). These will still work, but you 
 -T, --combine multiply         Multiply samples of corresponding channels from all input files (instead of concatenating)
 ```
 
-#FORMAT OPTIONS
+#Format Options
 
 ###input
 If format options are passed to `soxInputOpts`, they will be used to interpret the incoming stream. They only *need* to be supplied for files that are headerless.
 
-###Output
+###output
 If format options are passed to `soxOutputOpts`, they will be used to encode the outgoing stream. (This is the expected use-case.)
 
 When an output option isn't supplied, the output file will have the same format as the input file where possible.

@@ -13,36 +13,34 @@ The other implementations I found were klunky to use; this has an extremely easy
 examples
 ========
 
+Transcode:
 ```js
 var Sox = require('sox-stream')
 var fs  = require('fs')
 
+var src = fs.createReadStream('song.ogg')
 var sox = Sox({
 	bits: 16,
 	rate: 44100,
 	channels: 2,
 	type: 'wav'
 })
-
-var src = fs.createReadStream('./original.mp3')
-var dst = fs.createWriteStream('./transcoded.wav')
-
+var dst = fs.createWriteStream('transcoded.wav')
 src.pipe(sox).pipe(dst)
+
+sox.on('error', function (err) {
+	console.log('oh no! ' + err.message)
+})
 ```
 
+Lower volume:
 ```js
 var Sox = require('sox-stream')
 var fs  = require('fs')
 
-var sox = Sox({ //input
-	volume: 0.8
-}, { //output
-	type: 'mp3'
-})
-
-var src = fs.createReadStream('./original.flac')
-var dst = fs.createWriteStream('./transcoded.mp3')
-
+var src = fs.createReadStream('loud.flac')
+var sox = Sox({ volume: 0.8 }, {})
+var dst = fs.createWriteStream('quiet.flac')
 src.pipe(sox).pipe(dst)
 ```
 
@@ -58,7 +56,8 @@ Returns a transform (a.k.a. through) stream. The stream also emits 'error' event
 
 ###sox features that are not supported
 - **effects** - Might support if there is demand for it. Create an issue if you *literally* can't live without this feature. If you're feeling generous, you could make a pull request.
-- **file system i/o** - The point of this module is to simplify sox usage. If your use case involves local files, you can use `fs.createReadStream().pipe(sox)`.
+- **read from local file** - Just do: `fs.createReadStream().pipe(sox).pipe(dst)`.
+- **write to local file** - Just do: `src.pipe(sox).pipe(fs.createWriteStream('filename.wav'))`.
 
 #options
 
@@ -112,7 +111,7 @@ npm install sox-stream
 
 #run tests
 
-To run the tests, you must clone the git repository. You must also have install SoX and put it in your `PATH`.
+To run the tests, you must clone the git repository. You must also install SoX and put it in your `PATH`.
 
 ```
 npm test

@@ -7,10 +7,16 @@ module.exports = function (cb) {
 	var tempFilePath = generateTempFilePath()
 	var writeStream = fs.createWriteStream( tempFilePath )
 	writeStream.once('finish', function () {
-		cb(null, tempFilePath)
+		cb(null, tempFilePath, cleanup)
 	})
 	writeStream.once('error', cb)
 	return writeStream
+
+	function cleanup(cb) {
+		fs.unlink(tempFilePath, function (err) {
+			cb && cb() //ignore deletion errors
+		})
+	}
 }
 
 function generateTempFilePath() {

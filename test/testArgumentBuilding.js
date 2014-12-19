@@ -9,7 +9,7 @@ function deepEqual(t, description, obj, expected) {
 		t.equal(result.length, expected.length, 'lengths are equal')
 		expected.forEach(function (r, i) {
 			t.notEqual(result.indexOf(r), -1, r + ' expected')
-			t.equal(i%2, result.indexOf(r)%2, 'both indexes are ' + (i%2? 'even' : 'odd'))
+			t.equal(i%2, result.indexOf(r)%2, 'both indexes are ' + (i%2? 'values' : 'arguments'))
 		})
 		t.end()
 	})

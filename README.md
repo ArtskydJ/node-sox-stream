@@ -3,59 +3,54 @@ sox-stream
 
 A stream-friendly wrapper around [SoX](http://sox.sourceforge.net/).
 
-Specifically for transcoding audio files.
+Transcode audio streams easily.
 
 why
 ===
 
-The other implementations I found were klunky to use; this has an extremely easy-to-use streaming interface. (Also works with an input file.)
+The other implementations I found were klunky to use; this has an extremely easy-to-use streaming interface.
 
-example
-=======
+examples
+========
 
 ```js
 var Sox = require('sox-stream')
 var fs  = require('fs')
 
-var sox = Sox({  //input:
-	type: 'mp3'
-}, {             //output:
+var sox = Sox({
 	bits: 16,
 	rate: 44100,
 	channels: 2,
 	type: 'wav'
 })
 
-//Don't set encodings on the streams unless you know what you're doing:
 var src = fs.createReadStream('./original.mp3')
 var dst = fs.createWriteStream('./transcoded.wav')
 
 src.pipe(sox).pipe(dst)
 ```
 
-#install
+```js
+var Sox = require('sox-stream')
+var fs  = require('fs')
 
-Install with npm:
+var sox = Sox({ //input
+	volume: 0.8
+}, { //output
+	channels: 2,
+	type: 'mp3'
+})
 
+var src = fs.createReadStream('./original.flac')
+var dst = fs.createWriteStream('./transcoded.mp3')
+
+src.pipe(sox).pipe(dst)
 ```
-npm install sox-stream
-```
 
-To run the tests, you must have SoX in your `PATH`.
+#sox([soxInputOpts], soxOutputOpts, [soxPath])
 
-```
-npm test
-```
-
-
-#sox(soxInputOpts, soxOutputOpts, [inFile, [soxPath]])
-
-- `soxInputOpts` is an object, and is required. You should probably pass in `type`. These options will be used to interpret the incoming stream.
+- `soxInputOpts` is an object, and is optional. These options will be used to interpret the incoming stream.
 - `soxOutputOpts` is an object, and is required. You must pass the `type` parameter in. These options will be used to format the outgoing stream.
-- `inFile` is a string, and is optional. (Required when you specify a `soxPath`.)
-	- Defaults to `''`, which disables this feature. The input stream is used. (When SoX reads from the disk, it works more reliably.)
-	- If you pass in a non-existing file, the input stream be saved temporarily to that location, and SoX will use that file.
-	- If you pass in an existing file, that file will be used instead of the input stream.
 - `soxPath` is a string of the path to SoX. Optional, defaults to `'sox'`, which works if the SoX binary is in your path. E.g. `'C:\Program Files\Sox\sox.exe'`.
 
 Returns a transform (a.k.a. through) stream. The stream also emits 'error' events when there is an error.
@@ -93,19 +88,21 @@ Most likely you will want to use these on `soxOutputOpts`. Then they will be use
 
 I forgot to fill this section out, which is why you're seeing this. Sorry; create an issue if you want me to fix it.
 
+#install
 
+Install with npm: 
 
-#running tests
+```
+npm install sox-stream
+```
+
+#run tests
+
+To run the tests, you must clone the git repository. You must also have install SoX and put it in your `PATH`.
 
 ```
 npm test
 ```
-Note that this expects SoX to be on your path.
-
-#known issues
-
-- SoX doesn't seem to like to be streamed `.ogg` files.
-- SoX will often output the wrong length.
 
 #license
 

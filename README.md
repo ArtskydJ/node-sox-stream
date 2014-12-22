@@ -110,7 +110,8 @@ npm test
 - **Links:**
 	- [Windows (Precompiled)](https://github.com/EaterOfCode/sux/tree/master/win_libs)
 	- [Windows (How-To)](http://www.codeproject.com/Articles/33901/Compiling-SOX-with-Lame-and-Libmad-for-Windows)
-	- [Ubuntu (How-To)](http://eggblog.invertedegg.com/?p=19)
+	- [Ubuntu (How-To)](http://superuser.com/questions/421153/how-to-add-a-mp3-handler-to-sox)
+	- [Ubuntu (How-To) 2](http://eggblog.invertedegg.com/?p=19)
 	- [CentOS (How-To)](http://techblog.netwater.com/?p=4)
 
 #license

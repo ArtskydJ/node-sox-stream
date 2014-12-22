@@ -80,7 +80,7 @@ Most likely you will want to use these on `soxOutputOpts`. Then they will be use
 
 ###output-only
 
-- `C` or `compression`, **integer** usually, compression level. 0 = low compression (large file size).
+- `C` or `compression`, **integer** or **float**, usage depends on output `type`. See [SoX format docs](http://sox.sourceforge.net/soxformat.html) for more information.
 
 #install
 

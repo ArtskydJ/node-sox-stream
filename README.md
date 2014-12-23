@@ -11,41 +11,52 @@ The other implementations I found were klunky to use; this has an extremely easy
 examples
 ========
 
-Lower volume:
+Simple transcode:
 ```js
-var Sox = require('sox-stream')
+var sox = require('sox-stream')
 var fs  = require('fs')
 
-var src = fs.createReadStream('loud.flac')
-var sox = Sox({ volume: 0.8 }, {})
-var dst = fs.createWriteStream('quiet.flac')
-src.pipe(sox).pipe(dst)
+fs.createReadStream('song.wav')
+	.pipe( sox({type: 'flac'}) )
+	.pipe( fs.createWriteStream('song.flac') )
 ```
 
-Transcode:
+Lower volume:
 ```js
-var Sox = require('sox-stream')
+var sox = require('sox-stream')
+var fs  = require('fs')
+
+var src = fs.createReadStream('song.flac')
+var lowerVolume = sox({ volume: 0.8 }, {})
+var dst = fs.createWriteStream('song2.flac')
+
+src.pipe(lowerVolume).pipe(dst)
+```
+
+Transcode with options and error handling:
+```js
+var sox = require('sox-stream')
 var fs  = require('fs')
 
 var src = fs.createReadStream('song.ogg')
-var sox = Sox({
+var transcode = sox({
 	bits: 16,
 	rate: 44100,
 	channels: 2,
 	type: 'wav'
 })
-var dst = fs.createWriteStream('transcoded.wav')
-src.pipe(sox).pipe(dst)
+var dst = fs.createWriteStream('song.wav')
+src.pipe(transcode).pipe(dst)
 
-sox.on('error', function (err) {
+transcode.on('error', function (err) {
 	console.log('oh no! ' + err.message)
 })
 ```
 
-#sox([soxInputOpts], soxOutputOpts, [soxPath])
+#sox([inputOpts], outputOpts, [soxPath])
 
-- `soxInputOpts` is an object, and is optional. These options will be used to interpret the incoming stream.
-- `soxOutputOpts` is an object, and is required. You must pass the `type` parameter in. These options will be used to format the outgoing stream.
+- `inputOpts` is an object, and is optional. These options will be used to interpret the incoming stream. (Rarely useful.)
+- `outputOpts` is an object, and is required. You must pass the `type` parameter in. These options will be used to format the outgoing stream.
 - `soxPath` is a string of the path to SoX. Optional, defaults to `'sox'`, which works if the SoX binary is in your path. E.g. `'C:\Program Files\Sox\sox.exe'`.
 
 Returns a transform (a.k.a. through) stream. The stream also emits 'error' events when there is an error.
@@ -54,25 +65,20 @@ Returns a transform (a.k.a. through) stream. The stream also emits 'error' event
 
 ###sox features that are not supported
 - **effects** - Might support if there is demand for it. Create an issue if you *literally* can't live without this feature. If you're feeling generous, you could make a pull request.
-- **read from local file** - Just do: `fs.createReadStream('src.ogg').pipe(sox).pipe(dst)`.
-- **write to local file** - Just do: `src.pipe(sox).pipe(fs.createWriteStream('dst.wav'))`.
 
 #options
 
 The common options are listed below.
 
-The rest of the options are listed in [options.md][more-opts].
-
 ###input and output:
 
-If you use these options on `soxInputOpts`, they will be used to interpret the incoming stream.
+If you use these options on `inputOpts`, they will be used to interpret the incoming stream.  
+Most likely you will want to use these on `outputOpts`. Then they will be used to format the outgoing stream.
 
-Most likely you will want to use these on `soxOutputOpts`. Then they will be used to format the outgoing stream.
-
-- [`b` or `bits`][bitdepth-arg], **number**, bit depth. E.g. `16`. (Not applicable to complex encodings such as MP3 or GSM.)
-- [`c` or `channels`][channel-arg], **number**, number of channels. E.g. `2` for stereo.
-- [`r` or `rate`][samplerate-arg], **number**, sample rate. E.g. `44100`.
-- [`t` or `type`][type-arg], **string**, file type. E.g. `'wav'`. This property is required by `soxOutputOpts`, and is suggested for `soxInputOpts`.
+- [`b`][bitdepth-arg] or [`bits`][bitdepth-arg], **number**, bit depth. E.g. `16`. (Not applicable to complex encodings such as MP3 or GSM.)
+- [`c`][channel-arg] or [`channels`][channel-arg], **number**, number of channels. E.g. `2` for stereo.
+- [`r`][samplerate-arg] or [`rate`][samplerate-arg], **number**, sample rate. E.g. `44100`.
+- [`t`][type-arg] or [`type`][type-arg], **string**, file type. E.g. `'wav'`. This property is required by `outputOpts`.
 
 ###input-only:
 
@@ -81,6 +87,10 @@ Most likely you will want to use these on `soxOutputOpts`. Then they will be use
 ###output-only
 
 - `C` or `compression`, **integer** or **float**, usage depends on output `type`. See [SoX format docs](http://sox.sourceforge.net/soxformat.html) for more information.
+
+###must haz moar options!
+
+SoX options that you probably won't need are listed in [options.md][more-opts].
 
 #install
 

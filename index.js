@@ -1,7 +1,7 @@
 var spawn = require('child_process').spawn
 var duplexer = require('duplexer')
 var through2 = require('through2')
-var toArgs = require('./objToArgArray.js')
+var hashToArray = require('hash-to-array')
 var streamToTempFile = require('./streamToTempFile.js')
 
 module.exports = function job(inputOpts, outputOpts, soxFile) {
@@ -38,6 +38,11 @@ module.exports = function job(inputOpts, outputOpts, soxFile) {
 }
 
 function callSox(soxFile, inputOpts, outputOpts, tempFilePath) {
-	var args = [].concat( toArgs(inputOpts), tempFilePath, toArgs(outputOpts), '-' )
+	var args = [].concat(
+		hashToArray(inputOpts),
+		tempFilePath,
+		hashToArray(outputOpts),
+		'-'
+	)
 	return spawn(soxFile, args)
 }

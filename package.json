@@ -4,7 +4,7 @@
   "description": "A stream-only wrapper around sox",
   "main": "index.js",
   "scripts": {
-    "test": "tap test/*.js"
+    "test": "tap test.js"
   },
   "repository": {
     "type": "git",

@@ -2,7 +2,7 @@ var spawn = require('child_process').spawn
 var duplexer = require('duplexer')
 var through2 = require('through2')
 var hashToArray = require('hash-to-array')
-var streamToTempFile = require('./streamToTempFile.js')
+var streamToTempFile = require('./stream-to-temp-file.js')
 
 module.exports = function job(inputOpts, outputOpts, soxFile) {
 	if (typeof outputOpts !== 'object') {

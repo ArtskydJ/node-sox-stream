@@ -90,7 +90,7 @@ Most likely you will want to use these on `outputOpts`. Then they will be used t
 
 ###must haz moar options!
 
-SoX options that you probably won't need are listed in [options.md][more-opts].
+SoX options that you probably won't need are listed in [MORE-OPTIONS.md][more-options].
 
 #install
 
@@ -135,4 +135,4 @@ npm test
 [samplerate-arg]: https://en.wikipedia.org/wiki/Sampling_(signal_processing)#Sampling_rate
 [type-arg]: https://en.wikipedia.org/wiki/Audio_file_format
 [stream-handbook]: https://github.com/substack/stream-handbook
-[more-opts]: https://github.com/ArtskydJ/sox-stream/blob/master/options.md
+[more-options]: https://github.com/ArtskydJ/sox-stream/blob/master/MORE-OPTIONS.md

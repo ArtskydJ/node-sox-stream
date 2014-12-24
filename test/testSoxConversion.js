@@ -13,9 +13,15 @@ function getTmpDirLen() {
 	return fs.readdirSync(os.tmpdir()).length
 }
 
-function assertExactSize(t, value) {
+function closeEnough(x, y) {
+	var ratio = x / y
+	var diff = Math.abs(ratio - 1)
+	return diff < 0.005 //within 5 thousandths of the expected value
+}
+
+function assertSize(t, value) {
 	return concat(function (buf) {
-		t.equal(value, buf.length, 'output is exactly ' + value + ' bytes')
+		t.ok( closeEnough(buf.length, value), buf.length + ' bytes is close enough to ' + value + ' bytes')
 		t.end()
 	})
 }
@@ -33,7 +39,7 @@ test('ogg > wav', function (t) {
 	sox.on('error', handle(t))
 	fs.createReadStream(relativePath('audio/test_1.ogg'))
 		.pipe(sox)
-		.pipe(assertExactSize(t, 138636))
+		.pipe(assertSize(t, 138636))
 })
 
 test('ogg > wav - no inputOpts', function (t) {
@@ -41,7 +47,7 @@ test('ogg > wav - no inputOpts', function (t) {
 	sox.on('error', handle(t))
 	fs.createReadStream(relativePath('audio/test_1.ogg'))
 		.pipe(sox)
-		.pipe(assertExactSize(t, 138636))
+		.pipe(assertSize(t, 138636))
 })
 
 test('ogg > wav - options - too loud', function (t) {
@@ -59,7 +65,7 @@ test('ogg > wav - options - too loud', function (t) {
 	})
 	fs.createReadStream(relativePath('audio/test_2.ogg'))
 		.pipe(sox)
-		.pipe(assertExactSize(t, 0)) //this should never get called
+		.pipe(assertSize(t, 0)) //this should never get called
 })
 
 test('ogg > wav - options - adjusted volume', {timeout: 3000}, function (t) {
@@ -76,7 +82,7 @@ test('ogg > wav - options - adjusted volume', {timeout: 3000}, function (t) {
 	sox.on('error', handle(t))
 	fs.createReadStream(relativePath('audio/test_2.ogg'))
 		.pipe(sox)
-		.pipe(assertExactSize(t, 2724056))
+		.pipe(assertSize(t, 2724056))
 })
 
 test('ogg > mp3', function (t) {
@@ -84,7 +90,7 @@ test('ogg > mp3', function (t) {
 	sox.on('error', handle(t))
 	fs.createReadStream(relativePath('audio/test_3.ogg'))
 		.pipe(sox)
-		.pipe(assertExactSize(t, 230295))
+		.pipe(assertSize(t, 230295))
 })
 
 test('wav > flac', function (t) {
@@ -92,7 +98,7 @@ test('wav > flac', function (t) {
 	sox.on('error', handle(t))
 	fs.createReadStream(relativePath('audio/test_4.wav'))
 		.pipe(sox)
-		.pipe(assertExactSize(t, 13993))
+		.pipe(assertSize(t, 13993))
 })
 
 test('wav > ogg', function (t) {
@@ -100,7 +106,7 @@ test('wav > ogg', function (t) {
 	sox.on('error', handle(t))
 	fs.createReadStream(relativePath('audio/test_5.wav'))
 		.pipe(sox)
-		.pipe(assertExactSize(t, 18492))
+		.pipe(assertSize(t, 18492))
 })
 
 test('wav > mp3', function (t) {
@@ -108,7 +114,7 @@ test('wav > mp3', function (t) {
 	sox.on('error', handle(t))
 	fs.createReadStream(relativePath('audio/test_6.wav'))
 		.pipe(sox)
-		.pipe(assertExactSize(t, 264986))
+		.pipe(assertSize(t, 264986))
 })
 
 test('flac > ogg', function (t) {
@@ -116,7 +122,7 @@ test('flac > ogg', function (t) {
 	sox.on('error', handle(t))
 	fs.createReadStream(relativePath('audio/test_7.flac'))
 		.pipe(sox)
-		.pipe(assertExactSize(t, 265597))
+		.pipe(assertSize(t, 265597))
 })
 
 test('cleans up tmp files', function (t) {

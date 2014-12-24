@@ -1,7 +1,7 @@
 {
   "name": "sox-stream",
-  "version": "0.1.3",
-  "description": "A stream-only wrapper around sox",
+  "version": "0.1.4",
+  "description": "A stream-friendly wrapper around SoX",
   "main": "index.js",
   "scripts": {
     "test": "tap test.js"

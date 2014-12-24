@@ -94,7 +94,7 @@ SoX options that you probably won't need are listed in [options.md][more-opts].
 
 #install
 
-Install [SoX 14.4.1a][sox-latest]. Then install this package with npm: 
+Install [SoX 14.4.1a][sox-1441] or [SoX 14.4.2 rc2][sox-1442]. Then install this package with npm: 
 
 ```
 npm install sox-stream
@@ -111,7 +111,7 @@ npm test
 ###FLAC
 
 - **Problem:** FLAC was disabled accidentally in 14.4.1 (SourceForge default). [[Stack Overflow](http://stackoverflow.com/questions/23382500/how-to-install-flac-support-flac-libraries-to-sox-in-windows/25755799)]
-- **Solution:** Install [SoX 14.4.1a][sox-latest].
+- **Solution:** Install [SoX 14.4.1a][sox-1441] or [SoX 14.4.2 rc2][sox-1442].
 
 ###MP3
 
@@ -128,7 +128,8 @@ npm test
 
 [VOL](http://veryopenlicense.com)
 
-[sox-latest]: http://sourceforge.net/projects/sox/files/sox/14.4.1/sox-14.4.1a-win32.exe/download
+[sox-1441]: http://sourceforge.net/projects/sox/files/sox/14.4.1/
+[sox-1442]: http://sourceforge.net/projects/sox/files/release_candidates/sox/14.4.2rc2/
 [bitdepth-arg]: https://en.wikipedia.org/wiki/Audio_bit_depth
 [channel-arg]: https://en.wikipedia.org/wiki/Audio_channel
 [samplerate-arg]: https://en.wikipedia.org/wiki/Sampling_(signal_processing)#Sampling_rate

@@ -2,7 +2,7 @@ var spawn = require('child_process').spawn
 var duplexer = require('duplexer')
 var through2 = require('through2')
 var hashToArray = require('hash-to-array')
-var streamToTempFile = require('./stream-to-temp-file.js')
+var createTempFile = require('create-temp-file')
 
 module.exports = function job(inputOpts, outputOpts, soxFile) {
 	if (typeof outputOpts !== 'object') {
@@ -12,28 +12,25 @@ module.exports = function job(inputOpts, outputOpts, soxFile) {
 	}
 	soxFile = soxFile || 'sox'
 
-	var soxOutputStream = through2()
+	var soxOutput = through2()
+	var tmpFile = createTempFile()
 
-	var writeStream = streamToTempFile(function (err, tempFilePath, cleanup) {
-		if (err) {
-			emitErr(err)
-		} else {
-			var sox = callSox(soxFile, inputOpts, outputOpts, tempFilePath)
-			sox.stdout.pipe(soxOutputStream)
-			sox.stdout.on('finish', cleanup)
-			sox.stderr.on('data', function (chunk) {
-				emitErr(new Error(chunk.toString('utf8')))
-			})
-			sox.on('error', emitErr)
-		}
-
-		function emitErr(err) {
-			cleanup( duplex.emit.bind(duplex, 'error', err) )
-		}
+	tmpFile.on('error', emitErr)
+	tmpFile.on('finish', function () {
+		var sox = callSox(soxFile, inputOpts, outputOpts, tmpFile.path)
+		sox.stdout.pipe(soxOutput)
+		sox.stdout.on('finish', tmpFile.cleanup.bind(tmpFile)) //tmpFile.cleanup
+		sox.stderr.on('data', function (chunk) {
+			emitErr(new Error(chunk.toString('utf8')))
+		})
+		sox.on('error', emitErr)
 	})
 
-	var duplex = duplexer(writeStream, soxOutputStream)
+	function emitErr(err) {
+		tmpFile.cleanup( duplex.emit.bind(duplex, 'error', err) )
+	}
 
+	var duplex = duplexer(tmpFile, soxOutput)
 	return duplex
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "sox-stream",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "A stream-friendly wrapper around SoX",
   "main": "index.js",
   "scripts": {
@@ -27,12 +27,12 @@
   "homepage": "https://github.com/ArtskydJ/sox-stream",
   "devDependencies": {
     "concat-stream": "^1.4.7",
-    "tap": "^0.4.13"
+    "tap": "^0.5.0"
   },
   "dependencies": {
     "create-temp-file": "^0.1.0",
     "duplexer": "^0.1.1",
-    "hash-to-array": "0.0.2",
+    "hash-to-array": "^1.0.0",
     "through2": "^0.6.3"
   }
 }

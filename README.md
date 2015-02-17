@@ -3,13 +3,11 @@ sox-stream
 
 A stream-friendly wrapper around [SoX](http://sox.sourceforge.net/). Transcode audio streams easily!
 
-why
-===
+# why
 
 The other implementations I found felt klunky to use; this has an extremely easy-to-use streaming interface.
 
-examples
-========
+# examples
 
 Simple transcode:
 ```js
@@ -53,7 +51,7 @@ transcode.on('error', function (err) {
 })
 ```
 
-#sox([inputOpts], outputOpts, [soxPath])
+# sox([inputOpts], outputOpts, [soxPath])
 
 - `inputOpts` is an object, and is optional. These options will be used to interpret the incoming stream. (Rarely useful.)
 - `outputOpts` is an object, and is required. You must pass the `type` parameter in. These options will be used to format the outgoing stream.
@@ -63,14 +61,14 @@ Returns a transform (a.k.a. through) stream. The stream also emits 'error' event
 
 (If you don't know how to use streams, I recommend reading the [stream handbook][stream-handbook].)
 
-###sox features that are not supported
+### sox features that are not supported
 - **effects** - Might support if there is demand for it. Create an issue if you *literally* can't live without this feature. If you're feeling generous, you could make a pull request.
 
-#options
+# options
 
 The common options are listed below.
 
-###input and output:
+### input and output:
 
 If you use these options on `inputOpts`, they will be used to interpret the incoming stream.  
 Most likely you will want to use these on `outputOpts`. Then they will be used to format the outgoing stream.
@@ -80,19 +78,19 @@ Most likely you will want to use these on `outputOpts`. Then they will be used t
 - [`r`][samplerate-arg] or [`rate`][samplerate-arg], **number**, sample rate. E.g. `44100`.
 - [`t`][type-arg] or [`type`][type-arg], **string**, file type. E.g. `'wav'`. This property is required by `outputOpts`.
 
-###input-only:
+### input-only:
 
 - `v` or `volume`, **floating point number**, volume adjustment. E.g. `0.8` would make the output stream 80% its original volume (which would be slightly quieter), while `1.0` would preserve the volume.
 
-###output-only
+### output-only
 
 - `C` or `compression`, **integer** or **float**, usage depends on output `type`. See [SoX format docs](http://sox.sourceforge.net/soxformat.html) for more information.
 
-###must haz moar options!
+### must haz moar options!
 
 SoX options that you probably won't need are listed in [OPTIONS.md][options].
 
-#install
+# install
 
 Install [SoX 14.4.1a][sox-1441] or [SoX 14.4.2rc2][sox-1442]. Then install this package with npm: 
 
@@ -113,14 +111,14 @@ I run the tests using:
 
 Other versions of SoX should work fine.
 
-#codec support
+# codec support
 
-###FLAC
+### FLAC
 
 - **Problem:** FLAC was disabled accidentally in 14.4.1 (SourceForge default). [[Stack Overflow](http://stackoverflow.com/questions/23382500/how-to-install-flac-support-flac-libraries-to-sox-in-windows/25755799)]
 - **Solution:** Install [SoX 14.4.1a][sox-1441] or [SoX 14.4.2rc2][sox-1442].
 
-###MP3
+### MP3
 
 - **Problem:** MP3 is [proprietary](https://en.wikipedia.org/wiki/LAME#Patents_and_legal_issues). It's really lame and makes me mad.
 - **Solution:** Get the [Fraunhofer Society](https://en.wikipedia.org/wiki/Fraunhofer_Society#Notable_projects) to release MP3 under an open source license. Or, more realistically; compile the [LAME](http://lame.sourceforge.net/) encoder, and/or the [MAD](http://www.underbit.com/products/mad) decoder.
@@ -131,7 +129,7 @@ Other versions of SoX should work fine.
 	- [Ubuntu (How-To) 2](http://eggblog.invertedegg.com/?p=19)
 	- [CentOS (How-To)](http://techblog.netwater.com/?p=4)
 
-#license
+# license
 
 [VOL](http://veryopenlicense.com)
 

@@ -92,7 +92,7 @@ SoX options that you probably won't need are listed in [OPTIONS.md][options].
 
 # install
 
-Install [SoX 14.4.1a][sox-1441] or [SoX 14.4.2rc2][sox-1442]. Then install this package with npm: 
+Install [SoX 14.4.2][sox-1442]. Then install this package with npm: 
 
 ```
 npm install sox-stream
@@ -104,19 +104,14 @@ To run the tests, you must clone the [git repository](https://github.com/Artskyd
 npm test
 ```
 
-I run the tests using:
-
-- [SoX 14.4.1a][sox-1441]
-- [SoX 14.4.2rc2][sox-1442]
-
-Other versions of SoX should work fine.
+I run the tests using [SoX 14.4.2][sox-1442], but other versions of SoX should work fine.
 
 # codec support
 
 ### FLAC
 
-- **Problem:** FLAC was disabled accidentally in 14.4.1 (SourceForge default). [[Stack Overflow](http://stackoverflow.com/questions/23382500/how-to-install-flac-support-flac-libraries-to-sox-in-windows/25755799)]
-- **Solution:** Install [SoX 14.4.1a][sox-1441] or [SoX 14.4.2rc2][sox-1442].
+- **Problem:** FLAC was disabled accidentally in 14.4.1 (SourceForge default). [[Stack Overflow][so-flac]]
+- **Solution:** Install [SoX 14.4.2][sox-1442].
 
 ### MP3
 
@@ -133,11 +128,11 @@ Other versions of SoX should work fine.
 
 [VOL](http://veryopenlicense.com)
 
-[sox-1441]: http://sourceforge.net/projects/sox/files/sox/14.4.1/
-[sox-1442]: http://sourceforge.net/projects/sox/files/release_candidates/sox/14.4.2rc2/
+[sox-1442]: http://sourceforge.net/projects/sox/files/sox/14.4.2/
 [bitdepth-arg]: https://en.wikipedia.org/wiki/Audio_bit_depth
 [channel-arg]: https://en.wikipedia.org/wiki/Audio_channel
 [samplerate-arg]: https://en.wikipedia.org/wiki/Sampling_(signal_processing)#Sampling_rate
 [type-arg]: https://en.wikipedia.org/wiki/Audio_file_format
 [stream-handbook]: https://github.com/substack/stream-handbook
 [options]: https://github.com/ArtskydJ/sox-stream/blob/master/OPTIONS.md
+[so-flac]: http://stackoverflow.com/questions/23382500/how-to-install-flac-support-flac-libraries-to-sox-in-windows/25755799

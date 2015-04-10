@@ -1,10 +1,10 @@
 {
   "name": "sox-stream",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "A stream-friendly wrapper around SoX",
   "main": "index.js",
   "scripts": {
-    "test": "tap test.js"
+    "test": "tape test.js"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
   "homepage": "https://github.com/ArtskydJ/sox-stream",
   "devDependencies": {
     "concat-stream": "^1.4.7",
-    "tap": "^0.5.0"
+    "tape": "^4.0.0"
   },
   "dependencies": {
     "create-temp-file": "^0.1.0",

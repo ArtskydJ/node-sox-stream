@@ -1,4 +1,4 @@
-var test = require('tap').test
+var test = require('tape')
 var Sox = require('./')
 var fs = require('fs')
 var crypto = require('crypto')

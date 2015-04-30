@@ -86,14 +86,6 @@ test('ogg > wav - options - adjusted volume', {timeout: 3000}, function (t) {
 		.pipe(assertSize(t, 2724056))
 })
 
-test('ogg > mp3', function (t) {
-	var sox = Sox({ type: 'ogg' }, { type: 'mp3' })
-	sox.on('error', handle(t))
-	fs.createReadStream(relativePath('test_3.ogg'))
-		.pipe(sox)
-		.pipe(assertSize(t, 230295))
-})
-
 test('wav > flac', function (t) {
 	var sox = Sox({ type: 'flac' })
 	sox.on('error', handle(t))
@@ -108,14 +100,6 @@ test('wav > ogg', function (t) {
 	fs.createReadStream(relativePath('test_5.wav'))
 		.pipe(sox)
 		.pipe(assertSize(t, 18492))
-})
-
-test('wav > mp3', function (t) {
-	var sox = Sox({ type: 'wav' }, { type: 'mp3' })
-	sox.on('error', handle(t))
-	fs.createReadStream(relativePath('test_6.wav'))
-		.pipe(sox)
-		.pipe(assertSize(t, 264986))
 })
 
 test('flac > ogg', function (t) {

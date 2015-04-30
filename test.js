@@ -5,8 +5,9 @@ var crypto = require('crypto')
 var concat = require('concat-stream')
 var path = require('path')
 var os = require('os')
+var audioPath = path.dirname( require.resolve('test-audio') )
 
-var relativePath = path.join.bind(null, __dirname)
+var relativePath = path.join.bind(null, audioPath)
 var originalTmpDirLen = getTmpDirLen()
 
 function getTmpDirLen() {
@@ -37,7 +38,7 @@ function handle(t) {
 test('ogg > wav', function (t) {
 	var sox = Sox( { type: 'ogg' }, { type: 'wav' })
 	sox.on('error', handle(t))
-	fs.createReadStream(relativePath('test-audio/test_1.ogg'))
+	fs.createReadStream(relativePath('test_1.ogg'))
 		.pipe(sox)
 		.pipe(assertSize(t, 138636))
 })
@@ -45,7 +46,7 @@ test('ogg > wav', function (t) {
 test('ogg > wav - no inputOpts', function (t) {
 	var sox = Sox({ t: 'wav' })
 	sox.on('error', handle(t))
-	fs.createReadStream(relativePath('test-audio/test_1.ogg'))
+	fs.createReadStream(relativePath('test_1.ogg'))
 		.pipe(sox)
 		.pipe(assertSize(t, 138636))
 })
@@ -63,7 +64,7 @@ test('ogg > wav - options - too loud', function (t) {
 		t.ok(/sox WARN rate/.test(err.message), 'error message is a warning')
 		t.ok(/clipped/.test(err.message), 'error message says it clipped')
 	})
-	fs.createReadStream(relativePath('test-audio/test_2.ogg'))
+	fs.createReadStream(relativePath('test_2.ogg'))
 		.pipe(sox)
 		.pipe(assertSize(t, 'failure')) //this should never get called
 })
@@ -80,7 +81,7 @@ test('ogg > wav - options - adjusted volume', {timeout: 3000}, function (t) {
 		C: 5
 	})
 	sox.on('error', handle(t))
-	fs.createReadStream(relativePath('test-audio/test_2.ogg'))
+	fs.createReadStream(relativePath('test_2.ogg'))
 		.pipe(sox)
 		.pipe(assertSize(t, 2724056))
 })
@@ -88,7 +89,7 @@ test('ogg > wav - options - adjusted volume', {timeout: 3000}, function (t) {
 test('ogg > mp3', function (t) {
 	var sox = Sox({ type: 'ogg' }, { type: 'mp3' })
 	sox.on('error', handle(t))
-	fs.createReadStream(relativePath('test-audio/test_3.ogg'))
+	fs.createReadStream(relativePath('test_3.ogg'))
 		.pipe(sox)
 		.pipe(assertSize(t, 230295))
 })
@@ -96,7 +97,7 @@ test('ogg > mp3', function (t) {
 test('wav > flac', function (t) {
 	var sox = Sox({ type: 'flac' })
 	sox.on('error', handle(t))
-	fs.createReadStream(relativePath('test-audio/test_4.wav'))
+	fs.createReadStream(relativePath('test_4.wav'))
 		.pipe(sox)
 		.pipe(assertSize(t, 13993))
 })
@@ -104,7 +105,7 @@ test('wav > flac', function (t) {
 test('wav > ogg', function (t) {
 	var sox = Sox({ type: 'wav' }, { type: 'ogg' })
 	sox.on('error', handle(t))
-	fs.createReadStream(relativePath('test-audio/test_5.wav'))
+	fs.createReadStream(relativePath('test_5.wav'))
 		.pipe(sox)
 		.pipe(assertSize(t, 18492))
 })
@@ -112,7 +113,7 @@ test('wav > ogg', function (t) {
 test('wav > mp3', function (t) {
 	var sox = Sox({ type: 'wav' }, { type: 'mp3' })
 	sox.on('error', handle(t))
-	fs.createReadStream(relativePath('test-audio/test_6.wav'))
+	fs.createReadStream(relativePath('test_6.wav'))
 		.pipe(sox)
 		.pipe(assertSize(t, 264986))
 })
@@ -120,7 +121,7 @@ test('wav > mp3', function (t) {
 test('flac > ogg', function (t) {
 	var sox = Sox({ type: 'ogg' })
 	sox.on('error', handle(t))
-	fs.createReadStream(relativePath('test-audio/test_7.flac'))
+	fs.createReadStream(relativePath('test_7.flac'))
 		.pipe(sox)
 		.pipe(assertSize(t, 265597))
 })

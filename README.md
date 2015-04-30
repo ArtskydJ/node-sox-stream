@@ -1,6 +1,8 @@
 sox-stream
 ==========
 
+[![Build Status](https://travis-ci.org/ArtskydJ/sox-stream.svg)](https://travis-ci.org/ArtskydJ/sox-stream)
+
 A stream-friendly wrapper around [SoX](http://sox.sourceforge.net/). Transcode audio streams easily!
 
 # why
@@ -92,7 +94,7 @@ SoX options that you probably won't need are listed in [OPTIONS.md][options].
 
 # install
 
-Install [SoX 14.4.2][sox-1442]. Then install this package with npm: 
+Install [SoX 14.4.2][sox-1442]. Then install this package with npm:
 
 ```
 npm install sox-stream

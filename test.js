@@ -54,7 +54,10 @@ test('ogg > wav - no inputOpts', function (t) {
 test('ogg > wav - options - too loud', function (t) {
 	t.plan(3)
 	var caught = false
-	var sox = Sox({ type: 'ogg' }, {
+	var sox = Sox({
+		type: 'ogg',
+		v: 1.1
+	}, {
 		t: 'wav',
 		b: 16,
 		c: 1,
@@ -79,7 +82,7 @@ test('ogg > wav - options - too loud', function (t) {
 test('ogg > wav - options - adjusted volume', {timeout: 3000}, function (t) {
 	var sox = Sox({
 		type: 'ogg',
-		v: 0.99
+		v: 0.9
 	}, {
 		t: 'wav',
 		b: 16,

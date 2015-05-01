@@ -52,7 +52,8 @@ test('ogg > wav - no inputOpts', function (t) {
 })
 
 test('ogg > wav - options - too loud', function (t) {
-	t.plan(2)
+	t.plan(3)
+	var caught = false
 	var sox = Sox({ type: 'ogg' }, {
 		t: 'wav',
 		b: 16,
@@ -61,12 +62,18 @@ test('ogg > wav - options - too loud', function (t) {
 		C: 5
 	})
 	sox.on('error', function (err) {
-		t.ok(/sox WARN rate/.test(err.message), 'error message is a warning')
-		t.ok(/clipped/.test(err.message), 'error message says it clipped')
+		if (!caught) {
+			t.ok(/sox WARN rate/.test(err.message), 'warning: ' + err.message)
+			t.ok(/clipped/.test(err.message), 'error message says it clipped: ' + err.message)
+			caught = true
+		}
 	})
 	fs.createReadStream(relativePath('test_2.ogg'))
 		.pipe(sox)
-		.pipe(assertSize(t, 'failure')) //this should never get called
+		.on('end', function () {
+			t.ok(caught, 'an error was thrown earlier')
+			t.end()
+		})
 })
 
 test('ogg > wav - options - adjusted volume', {timeout: 3000}, function (t) {

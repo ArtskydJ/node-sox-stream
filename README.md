@@ -2,6 +2,8 @@ sox-stream
 ==========
 
 [![Build Status](https://travis-ci.org/ArtskydJ/sox-stream.svg)](https://travis-ci.org/ArtskydJ/sox-stream)
+[![Dependency Status](https://david-dm.org/artskydj/sox-stream.svg)](https://david-dm.org/artskydj/sox-stream)
+[![devDependency Status](https://david-dm.org/artskydj/sox-stream/dev-status.svg)](https://david-dm.org/artskydj/sox-stream#info=devDependencies)
 
 A stream-friendly wrapper around [SoX](http://sox.sourceforge.net/). Transcode audio streams easily!
 

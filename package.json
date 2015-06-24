@@ -34,6 +34,6 @@
     "create-temp-file": "^0.1.0",
     "duplexer": "^0.1.1",
     "hash-to-array": "^1.0.0",
-    "through2": "^0.6.3"
+    "through2": "^2.0.0"
   }
 }

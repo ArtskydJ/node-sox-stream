@@ -31,7 +31,7 @@
     "test-audio": "^1.0.0"
   },
   "dependencies": {
-    "create-temp-file": "^0.1.0",
+    "create-temp-file": "^1.0.0",
     "duplexer": "^0.1.1",
     "hash-to-array": "^1.0.0",
     "through2": "^2.0.0"

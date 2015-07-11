@@ -2,100 +2,58 @@ var test = require('tape')
 var Sox = require('./')
 var fs = require('fs')
 var crypto = require('crypto')
-var concat = require('concat-stream')
+var volume = require('stream-volume')
 var path = require('path')
-var os = require('os')
+var osTmpdir = require('os-tmpdir')
 var audioPath = path.dirname( require.resolve('test-audio') )
 
-var relativePath = path.join.bind(null, audioPath)
-var originalTmpDirLen = getTmpDirLen()
+var tmpFilesThen = getNumOfTmpFiles()
 
-function getTmpDirLen() {
-	return fs.readdirSync(os.tmpdir()).length
+function getNumOfTmpFiles() {
+	return fs.readdirSync(osTmpdir( )).length
 }
 
-function closeEnough(x, y) {
-	var ratio = x / y
-	var diff = Math.abs(ratio - 1)
-	return diff < 0.005 //within 5 thousandths of the expected value
+function closeEnough(t, got, expect, within, whats) {
+	var msg = 'got ' + got + ' ' + whats + ' is close enough to ' + expect + ' ' + whats
+	t.ok(Math.abs(got - expect) < within, msg)
+	t.end()
 }
 
-function assertSize(t, value) {
-	return concat(function (buf) {
-		t.ok( closeEnough(buf.length, value), buf.length + ' bytes is close enough to ' + value + ' bytes')
-		t.end()
-	})
-}
-
-function handle(t) {
-	return function handler(err) {
-		var isWarn = /WARN/.test(err.message)
-		t.fail(err.message)
-		isWarn || t.end()
+function asserting(soxOptsArr, file, endSize) {
+	return function (t) {
+		t.plan(1)
+		var soxTransform = Sox.apply(null, soxOptsArr)
+		soxTransform.on('error', function handler(err) {
+			var isWarn = /WARN/.test(err.message)
+			t.fail(err.message)
+			isWarn || t.end()
+		})
+		var filePath = path.join(audioPath, file)
+		fs.createReadStream(filePath)
+			.pipe(soxTransform)
+			.pipe(volume(function close(byteNum) {
+				closeEnough(t, byteNum, endSize, endSize/200, 'bytes')
+			}))
 	}
 }
 
-test('ogg > wav', function (t) {
-	var sox = Sox( { type: 'ogg' }, { type: 'wav' })
-	sox.on('error', handle(t))
-	fs.createReadStream(relativePath('test_1.ogg'))
-		.pipe(sox)
-		.pipe(assertSize(t, 138636))
-})
-
-test('ogg > wav - no inputOpts', function (t) {
-	var sox = Sox({ t: 'wav' })
-	sox.on('error', handle(t))
-	fs.createReadStream(relativePath('test_1.ogg'))
-		.pipe(sox)
-		.pipe(assertSize(t, 138636))
-})
-
-test('ogg > wav - options - adjusted volume', {timeout: 3000}, function (t) {
-	var sox = Sox({
-		type: 'ogg',
-		v: 0.9
-	}, {
-		t: 'wav',
-		b: 16,
-		c: 1,
-		r: 44100,
-		C: 5
-	})
-	sox.on('error', handle(t))
-	fs.createReadStream(relativePath('test_2.ogg'))
-		.pipe(sox)
-		.pipe(assertSize(t, 2724056))
-})
-
-test('wav > flac', function (t) {
-	var sox = Sox({ type: 'flac' })
-	sox.on('error', handle(t))
-	fs.createReadStream(relativePath('test_4.wav'))
-		.pipe(sox)
-		.pipe(assertSize(t, 13993))
-})
-
-test('wav > ogg', function (t) {
-	var sox = Sox({ type: 'wav' }, { type: 'ogg' })
-	sox.on('error', handle(t))
-	fs.createReadStream(relativePath('test_5.wav'))
-		.pipe(sox)
-		.pipe(assertSize(t, 18492))
-})
-
-test('flac > ogg', function (t) {
-	var sox = Sox({ type: 'ogg' })
-	sox.on('error', handle(t))
-	fs.createReadStream(relativePath('test_7.flac'))
-		.pipe(sox)
-		.pipe(assertSize(t, 265597))
-})
+test('ogg > wav', asserting([{ type: 'ogg' }, { type: 'wav' }], 'test_1.ogg', 138636 ))
+test('ogg > wav - no inputOpts', asserting([{ t: 'wav' }], 'test_1.ogg', 138636 ))
+var soxWithManyOptions = [{
+	type: 'ogg',
+	v: 0.9
+}, {
+	t: 'wav',
+	b: 16,
+	c: 1,
+	r: 44100,
+	C: 5
+}]
+test('ogg > wav - options - adjusted volume', asserting(soxWithManyOptions, 'test_2.ogg', 2724056 )) // { timeout: 3000 },
+test('wav > flac', asserting([{ type: 'flac' }], 'test_4.wav', 13993 ))
+test('wav > ogg', asserting([{ type: 'wav' }, { type: 'ogg' }], 'test_5.wav', 18492 ))
+test('flac > ogg', asserting([{ type: 'ogg' }], 'test_7.flac', 265597 ))
 
 test('cleans up tmp files', function (t) {
-	var nowTmpDirLen = getTmpDirLen()
-	var diff = Math.abs( originalTmpDirLen - nowTmpDirLen )
-	t.ok(diff <= 1, 'tmp dir started with ' + originalTmpDirLen
-		+ ' files, and has ' + nowTmpDirLen + ' files now')
-	t.end()
+	closeEnough(t, tmpFilesThen, getNumOfTmpFiles(), 'files')
 })

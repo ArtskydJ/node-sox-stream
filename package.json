@@ -26,7 +26,8 @@
   },
   "homepage": "https://github.com/ArtskydJ/sox-stream",
   "devDependencies": {
-    "concat-stream": "^1.4.7",
+    "os-tmpdir": "^1.0.1",
+    "stream-volume": "^1.0.2",
     "tape": "^4.0.0",
     "test-audio": "^1.0.0"
   },

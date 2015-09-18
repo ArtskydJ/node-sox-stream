@@ -18,15 +18,15 @@ Some options are for multiple files (e.g. `-m`). These will still work, but you 
 - `{M: true}`- `{combine: 'merge'}` - Merge multiple input files (instead of concatenating)
 - `{T: true}`- `{combine: 'multiply'}` - Multiply samples of corresponding channels from all input files (instead of concatenating)
 - `{D: true}`- `{no-dither: true}` - Don't dither automatically
-- `{effects-file: FILENAME}` - File containing effects and options
+- `{'effects-file': FILENAME}` - File containing effects and options
 - `{G: true}`- `{guard: true}` - Use temporary files to guard against clipping
-- `{input-buffer: BYTES}` - Override the input buffer size (default: same as --buffer; 8192)
+- `{'input-buffer': BYTES}` - Override the input buffer size (default: same as --buffer; 8192)
 - `{norm: true}` - Guard (see --guard) & normalise
-- `{play-rate-arg: ARG}` - Default `rate` argument for auto-resample with `play'
+- `{'play-rate-arg': ARG}` - Default `rate` argument for auto-resample with `play'
 - `{plot: 'gnuplot'|'octave'}` - Generate script to plot response of filter effect
-- `{replay-gain: 'track'|'album'|'off'}` - Default: 'off' (sox, rec), track (play)
+- `{'replay-gain': 'track'|'album'|'off'}` - Default: 'off' (sox, rec), track (play)
 - `{R: true}` - Use default random numbers (same on each run of SoX)
-- `{single-threaded: true}` - Disable parallel effects channels processing
+- `{'single-threaded': true}` - Disable parallel effects channels processing
 - `{temp: DIRECTORY}` - Specify the directory to use for temporary files
 
 
@@ -59,7 +59,7 @@ When an output option isn't supplied, the output file will have the same format 
 - `{c: true}`- `{channels: CHANNELS}` - Number of channels of audio data; e.g. 2 = stereo
 - `{r: RATE}`- `{rate: RATE}` - Sample rate of audio
 - `{C: FACTOR}`- `{compression: FACTOR}` - Compression factor for output format
-- `{add-comment: TEXT}` - Append output file comment
+- `{'add-comment': TEXT}` - Append output file comment
 - `{comment: TEXT}` - Specify comment text for the output file
-- `{comment-file: FILENAME}` - File containing comment text for the output file
-- `{no-glob: true}` - Don't `glob' wildcard match the following filename
+- `{'comment-file': FILENAME}` - File containing comment text for the output file
+- `{'no-glob': true}` - Don't `glob' wildcard match the following filename

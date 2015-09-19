@@ -2,14 +2,14 @@ sox-stream
 ==========
 
 [![Build Status](https://travis-ci.org/ArtskydJ/sox-stream.svg)](https://travis-ci.org/ArtskydJ/sox-stream)
-[![Dependency Status](https://david-dm.org/artskydj/sox-stream.svg)](https://david-dm.org/artskydj/sox-stream)
-[![devDependency Status](https://david-dm.org/artskydj/sox-stream/dev-status.svg)](https://david-dm.org/artskydj/sox-stream#info=devDependencies)
+[![Dependency Status](https://david-dm.org/ArtskydJ/sox-stream.svg)](https://david-dm.org/ArtskydJ/sox-stream)
+[![devDependency Status](https://david-dm.org/ArtskydJ/sox-stream/dev-status.svg)](https://david-dm.org/ArtskydJ/sox-stream#info=devDependencies)
 
 A stream-friendly wrapper around [SoX](http://sox.sourceforge.net/). Transcode audio streams easily!
 
 # why
 
-The other implementations I found felt klunky to use; this has an extremely easy-to-use streaming interface.
+The other implementations I found felt klunky to use; this has an extremely easy-to-use streaming interface. (If you don't know how to use streams, I recommend reading the [stream handbook][stream-handbook].)
 
 # examples
 
@@ -55,20 +55,23 @@ transcode.on('error', function (err) {
 })
 ```
 
-# sox([inputOpts], outputOpts, [soxPath])
+# api
+
+```js
+var sox = require('sox-stream')
+```
+
+## `var transform = sox([inputOpts], outputOpts, [soxPath])`
 
 - `inputOpts` is an object, and is optional. These options will be used to interpret the incoming stream. (Rarely useful.)
 - `outputOpts` is an object, and is required. You must pass the `type` parameter in. These options will be used to format the outgoing stream.
 - `soxPath` is a string of the path to SoX. Optional, defaults to `'sox'`, which works if the SoX binary is in your path. E.g. `'C:\Program Files\Sox\sox.exe'`.
-
-Returns a transform (a.k.a. through) stream. The stream also emits 'error' events when there is an error.
-
-(If you don't know how to use streams, I recommend reading the [stream handbook][stream-handbook].)
+- **Returns** `transform`, a stream to pipe data through. The stream emits 'error' events when there is an error.
 
 ### sox features that are not supported
 - **effects** - Might support if there is demand for it. Create an issue if you *literally* can't live without this feature. If you're feeling generous, you could make a pull request.
 
-# options
+## `options`
 
 The common options are listed below.
 
@@ -102,7 +105,7 @@ Install [SoX 14.4.2][sox-1442]. Then install this package with npm:
 npm install sox-stream
 ```
 
-To run the tests, you must clone the [git repository](https://github.com/ArtskydJ/sox-stream). You must also put SoX  in your `PATH`. Then run:
+To run the tests, you must clone the [git repository](https://github.com/ArtskydJ/sox-stream). You must also put SoX in your `PATH`. Then run:
 
 ```
 npm test

@@ -1,6 +1,6 @@
 var spawn = require('child_process').spawn
 var duplexer = require('duplexer')
-var through2 = require('through2')
+var stream = require('stream')
 var hashToArray = require('hash-to-array')
 var createTempFile = require('create-temp-file')()
 
@@ -10,9 +10,9 @@ module.exports = function job(inputOpts, outputOpts, soxFile) {
 		outputOpts = inputOpts
 		inputOpts = {}
 	}
-	soxFile = soxFile || 'sox'
+	if (!soxFile) soxFile = 'sox'
 
-	var soxOutput = through2()
+	var soxOutput = new stream.PassThrough()
 	var tmpFile = createTempFile()
 
 	tmpFile.on('error', emitErr)

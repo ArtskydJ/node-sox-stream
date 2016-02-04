@@ -1,11 +1,9 @@
 var test = require('tape')
 var Sox = require('./')
 var fs = require('fs')
-var crypto = require('crypto')
 var concat = require('concat-stream')
-var path = require('path')
 var osTmpdir = require('os-tmpdir')
-var audioPath = path.dirname( require.resolve('test-audio') )
+var testAudio = require('test-audio')()
 
 var tmpFilesThen = getNumOfTmpFiles()
 
@@ -26,19 +24,18 @@ function asserting(soxOptsArr, file, endSize) {
 		soxTransform.on('error', function handler(err) {
 			var isWarn = /WARN/.test(err.message)
 			t.fail(err.message)
-			isWarn || t.end()
+			if (!isWarn) t.end()
 		})
-		var filePath = path.join(audioPath, file)
-		fs.createReadStream(filePath)
+		fs.createReadStream(file.path)
 			.pipe(soxTransform)
 			.pipe(concat(function close(buf) {
-				closeEnough(t, buf.length, endSize, endSize/200, 'bytes')
+				closeEnough(t, buf.length, endSize, endSize / 200, 'bytes')
 			}))
 	}
 }
 
-test('ogg > wav', asserting([{ type: 'ogg' }, { type: 'wav' }], 'test_1.ogg', 138636 ))
-test('ogg > wav - no inputOpts', asserting([{ t: 'wav' }], 'test_1.ogg', 138636 ))
+test('ogg > wav', asserting([{ type: 'ogg' }, { type: 'wav' }], testAudio[1], 542884 ))
+test('ogg > wav - no inputOpts', asserting([{ t: 'wav' }], testAudio[1], 542884 ))
 var soxWithManyOptions = [{
 	type: 'ogg',
 	v: 0.9
@@ -49,10 +46,10 @@ var soxWithManyOptions = [{
 	r: 44100,
 	C: 5
 }]
-test('ogg > wav - options - adjusted volume', asserting(soxWithManyOptions, 'test_2.ogg', 2724056 )) // { timeout: 3000 },
-test('wav > flac', asserting([{ type: 'flac' }], 'test_4.wav', 13993 ))
-test('wav > ogg', asserting([{ type: 'wav' }, { type: 'ogg' }], 'test_5.wav', 18492 ))
-test('flac > ogg', asserting([{ type: 'ogg' }], 'test_7.flac', 265597 ))
+test('ogg > wav - options - adjusted volume', asserting(soxWithManyOptions, testAudio[1], 271464 )) // { timeout: 3000 },
+test('wav > flac', asserting([{ type: 'flac' }], testAudio[2], 4711 ))
+test('wav > ogg', asserting([{ type: 'wav' }, { type: 'ogg' }], testAudio[2], 5792 ))
+test('flac > ogg', asserting([{ type: 'ogg' }], testAudio[0], 5086 ))
 
 test('cleans up tmp files', function (t) {
 	closeEnough(t, tmpFilesThen, getNumOfTmpFiles(), 1, 'files')

@@ -29,7 +29,7 @@
     "concat-stream": "^1.5.0",
     "os-tmpdir": "^1.0.1",
     "tape": "^4.0.0",
-    "test-audio": "^1.0.0"
+    "test-audio": "^2.0.0"
   },
   "dependencies": {
     "create-temp-file": "^1.0.0",

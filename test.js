@@ -34,8 +34,8 @@ function asserting(soxOptsArr, file, endSize) {
 	}
 }
 
-test('ogg > wav', asserting([{ type: 'ogg' }, { type: 'wav' }], testAudio[1], 542884 ))
-test('ogg > wav - no inputOpts', asserting([{ t: 'wav' }], testAudio[1], 542884 ))
+test('ogg > wav', asserting([{ type: 'ogg' }, { type: 'wav' }], testAudio.ogg, 542884 ))
+test('ogg > wav - no inputOpts', asserting([{ t: 'wav' }], testAudio.ogg, 542884 ))
 var soxWithManyOptions = [{
 	type: 'ogg',
 	v: 0.9
@@ -46,10 +46,10 @@ var soxWithManyOptions = [{
 	r: 44100,
 	C: 5
 }]
-test('ogg > wav - options - adjusted volume', asserting(soxWithManyOptions, testAudio[1], 271464 )) // { timeout: 3000 },
-test('wav > flac', asserting([{ type: 'flac' }], testAudio[2], 4711 ))
-test('wav > ogg', asserting([{ type: 'wav' }, { type: 'ogg' }], testAudio[2], 5792 ))
-test('flac > ogg', asserting([{ type: 'ogg' }], testAudio[0], 5086 ))
+test('ogg > wav - options - adjusted volume', asserting(soxWithManyOptions, testAudio.ogg, 271464 )) // { timeout: 3000 },
+test('wav > flac', asserting([{ type: 'flac' }], testAudio.wav, 4711 ))
+test('wav > ogg', asserting([{ type: 'wav' }, { type: 'ogg' }], testAudio.wav, 5792 ))
+test('flac > ogg', asserting([{ type: 'ogg' }], testAudio.flac, 5086 ))
 
 test('cleans up tmp files', function (t) {
 	closeEnough(t, tmpFilesThen, getNumOfTmpFiles(), 1, 'files')

@@ -15,7 +15,10 @@ module.exports = function job(inputOpts, outputOpts, soxFile) {
 	var soxOutput = new stream.PassThrough()
 	var tmpFile = createTempFile()
 
-	tmpFile.on('error', emitErr)
+	tmpFile.on('error', function (err) {
+		// Do not call emitErr/tmpFile.cleanup, or it can create an infinite loop
+		duplex.emit('error', err)
+	})
 	tmpFile.on('finish', function () {
 		var sox = callSox(soxFile, inputOpts, outputOpts, tmpFile.path)
 		sox.stdout.pipe(soxOutput)
@@ -27,7 +30,9 @@ module.exports = function job(inputOpts, outputOpts, soxFile) {
 	})
 
 	function emitErr(err) {
-		tmpFile.cleanup( duplex.emit.bind(duplex, 'error', err) )
+		tmpFile.cleanup(function (err2) {
+			duplex.emit('error', err)
+		})
 	}
 
 	var duplex = duplexer(tmpFile, soxOutput)

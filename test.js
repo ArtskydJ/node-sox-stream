@@ -51,6 +51,23 @@ test('wav > flac', asserting([{ type: 'flac' }], testAudio.wav, 4711 ))
 test('wav > ogg', asserting([{ type: 'wav' }, { type: 'ogg' }], testAudio.wav, 5792 ))
 test('flac > ogg', asserting([{ type: 'ogg' }], testAudio.flac, 5086 ))
 
+// github issue #4
+test('An incorrect input type does not cause an infinite loop', function (t) {
+	var errorCount = 0
+
+	fs.createReadStream(testAudio.wav.path)
+		.pipe(Sox({ type: 'ogg' }, { type: 'wav' }))
+		.on('error', function (err) {
+			errorCount++
+		})
+
+	setTimeout(function () {
+		t.ok(errorCount >= 1, 'Received a few errors')
+		t.ok(errorCount < 10, 'Did not receive *lots* of errors')
+		t.end()
+	}, 200)
+})
+
 test('cleans up tmp files', function (t) {
 	closeEnough(t, tmpFilesThen, getNumOfTmpFiles(), 1, 'files')
 })

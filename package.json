@@ -1,7 +1,7 @@
 {
   "name": "sox-stream",
   "version": "1.0.4",
-  "description": "A stream-friendly wrapper around SoX",
+  "description": "A stream wrapper around SoX",
   "main": "index.js",
   "scripts": {
     "test": "node test.js"
@@ -20,7 +20,7 @@
     "convert"
   ],
   "author": "Joseph Dykstra",
-  "license": "VOL",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ArtskydJ/sox-stream/issues"
   },

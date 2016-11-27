@@ -1,50 +1,47 @@
-var spawn = require('child_process').spawn
+var cp = require('child_process')
 var duplexer = require('duplexer')
 var stream = require('stream')
 var hashToArray = require('hash-to-array')
 var createTempFile = require('create-temp-file')()
 
-module.exports = function job(inputOpts, outputOpts, soxFile) {
-	if (typeof outputOpts !== 'object') {
-		soxFile = outputOpts
-		outputOpts = inputOpts
-		inputOpts = {}
+module.exports = function soxStream(opts) {
+	if (!opts || !opts.output || (!opts.output.t && !opts.output.type)) {
+		throw new Error('Options must include output.type')
 	}
-	if (!soxFile) soxFile = 'sox'
-
 	var soxOutput = new stream.PassThrough()
 	var tmpFile = createTempFile()
 
-	tmpFile.on('error', function (err) {
-		// Do not call emitErr/tmpFile.cleanup, or it can create an infinite loop
-		duplex.emit('error', err)
-	})
+	tmpFile.on('error', emitErr)
 	tmpFile.on('finish', function () {
-		var sox = callSox(soxFile, inputOpts, outputOpts, tmpFile.path)
+		var args = []
+			.concat(hashToArray(opts.global || []))
+			.concat(hashToArray(opts.input || []))
+			.concat(tmpFile.path)
+			.concat(hashToArray(opts.output || []))
+			.concat('-')
+			.concat(opts.effects || [])
+			.reduce(function (flattened, ele) {
+				return flattened.concat(ele)
+			}, [])
+
+		var sox = cp.spawn(opts.soxPath || 'sox', args)
 		sox.stdout.pipe(soxOutput)
-		sox.stdout.on('finish', tmpFile.cleanup.bind(tmpFile)) //tmpFile.cleanup
+		sox.stdout.on('finish', tmpFile.cleanup)
 		sox.stderr.on('data', function (chunk) {
-			emitErr(new Error(chunk.toString('utf8')))
+			cleanupThenEmitErr(new Error(chunk))
 		})
-		sox.on('error', emitErr)
+		sox.on('error', cleanupThenEmitErr)
 	})
 
+	function cleanupThenEmitErr(err) {
+		tmpFile.cleanup(emitErr.bind(null, err))
+	}
+
 	function emitErr(err) {
-		tmpFile.cleanup(function (err2) {
-			duplex.emit('error', err)
-		})
+		if (!(err instanceof Error)) err = new Error(err)
+		duplex.emit('error', err)
 	}
 
 	var duplex = duplexer(tmpFile, soxOutput)
 	return duplex
-}
-
-function callSox(soxFile, inputOpts, outputOpts, tempFilePath) {
-	var args = [].concat(
-		hashToArray(inputOpts),
-		tempFilePath,
-		hashToArray(outputOpts),
-		'-'
-	)
-	return spawn(soxFile, args)
 }

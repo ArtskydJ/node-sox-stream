@@ -27,7 +27,7 @@ module.exports = function soxStream(opts) {
 		var sox = cp.spawn(opts.soxPath || 'sox', args)
 		sox.stdout.pipe(soxOutput)
 		sox.stdout.on('finish', function () {
-            cleanupThenEmit('finish', null);
+			cleanupThenEmit('finish', null);
 		})
 		sox.stderr.on('data', function (chunk) {
 			cleanupThenEmitErr(new Error(chunk))
@@ -43,7 +43,7 @@ module.exports = function soxStream(opts) {
 	
 	function cleanupThenEmitErr(err) {
 		if (!(err instanceof Error)) err = new Error(err)
-        cleanupThenEmit('error', err)
+		cleanupThenEmit('error', err)
 	}
 
 	function emitErr(err) {

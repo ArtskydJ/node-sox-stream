@@ -14,7 +14,6 @@ function getNumOfTmpFiles() {
 function closeEnough(t, got, expect, within, whats) {
 	var msg = got + ' ' + whats + ' is close enough to ' + expect + ' ' + whats
 	t.ok(Math.abs(got - expect) <= within, msg)
-	t.end()
 }
 
 function makeTest(description, soxOpts, file, endSize) {
@@ -25,10 +24,21 @@ function makeTest(description, soxOpts, file, endSize) {
 			t.fail(err.message)
 			if (!isWarn) t.end()
 		})
+		var finished = false;
+		soxTransform.on('finish', function handler() {
+			finished = true
+		})
 		fs.createReadStream(file.path)
 			.pipe(soxTransform)
 			.pipe(concat(function close(buf) {
 				closeEnough(t, buf.length, endSize, endSize / 200, 'bytes')
+				t.notOk(finished, 'stream should not be finished yet')
+				// after the piping is done the write stream should be finished
+				// its a bit delayed.
+				setTimeout(function() {
+					t.ok(finished, 'stream should be finished')
+					t.end()
+				}, 200)
 			}))
 	})
 }
@@ -72,4 +82,5 @@ test('An incorrect input type does not cause an infinite loop', function (t) {
 
 test('cleans up tmp files', function (t) {
 	closeEnough(t, tmpFilesThen, getNumOfTmpFiles(), 1, 'files')
+	t.end()
 })

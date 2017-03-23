@@ -24,17 +24,18 @@ function makeTest(description, soxOpts, file, endSize) {
 			t.fail(err.message)
 			if (!isWarn) t.end()
 		})
-		var finished = false;
+
+		var finished = false
 		soxTransform.on('finish', function handler() {
 			finished = true
 		})
+
 		fs.createReadStream(file.path)
 			.pipe(soxTransform)
 			.pipe(concat(function close(buf) {
 				closeEnough(t, buf.length, endSize, endSize / 200, 'bytes')
+
 				t.notOk(finished, 'stream should not be finished yet')
-				// after the piping is done the write stream should be finished
-				// its a bit delayed.
 				setTimeout(function() {
 					t.ok(finished, 'stream should be finished')
 					t.end()

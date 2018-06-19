@@ -1,8 +1,11 @@
 language: node_js
 node_js:
-  - "node"
-  - "4"
   - "0.10"
+  - "4"
+  - "6"
+  - "8"
+  - "10"
+  - "node"
 addons:
   apt:
     packages:

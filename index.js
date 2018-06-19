@@ -26,7 +26,7 @@ module.exports = function soxStream(opts) {
 
 		var sox = cp.spawn(opts.soxPath || 'sox', args)
 		sox.stdout.pipe(soxOutput)
-		sox.stdout.on('finish', function () {
+		sox.stdout.on('close', function () {
 			cleanupThenEmit('finish', null);
 		})
 		sox.stderr.on('data', function (chunk) {

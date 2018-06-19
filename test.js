@@ -1,6 +1,7 @@
 var test = require('tape')
 var Sox = require('./')
 var fs = require('fs')
+var cp = require('child_process')
 var concat = require('concat-stream')
 var osTmpdir = require('os-tmpdir')
 var testAudio = require('test-audio')()
@@ -50,6 +51,16 @@ test('no options: throw', function (t) {
 	t.throws(Sox.bind(null, { output: {}}))
 	t.throws(Sox.bind(null, { output: { type: null }}))
 	t.end()
+})
+
+test('sox is installed on your computer', function (t) {
+	t.plan(3)
+	cp.exec('sox --version', function (err, stdout, stderr) {
+		t.ifError(err)
+		t.ifError(stderr)
+		t.ok(stdout)
+		t.end()
+	})
 })
 
 makeTest('ogg > ogg', { output: { type: 'ogg' }}, testAudio.ogg, 66031)

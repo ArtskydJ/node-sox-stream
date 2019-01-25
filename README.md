@@ -136,7 +136,7 @@ You can supply an array of strings/numbers, or an object that will be transforme
 |   ✓  |    ✓  | `{ c: CHANNELS }`, `{ channels: CHANNELS }`          | Number of [channels](https://en.wikipedia.org/wiki/Audio_channel) of audio data. E.g. `2` for stereo |
 |   ✓  |    ✓  | `'--no-glob'`, `{ 'no-glob': true }`                 | Don't `glob' wildcard match the following filename        |
 |   ✓  |    ✓  | `{ r: RATE }`, `{ rate: RATE }`                      | [Sample rate](https://en.wikipedia.org/wiki/Sampling_(signal_processing)#Sampling_rate) of audio. E.g. `44100`, `48000` |
-|   X   |    ✓  | `{ C: FACTOR }`, `{ compression: FACTOR }`           | Compression factor. See [SoX format docs](http://sox.sourceforge.net/soxformat.html) for more information. |
+|   X   |    ✓  | `{ C: FACTOR }`, `{ compression: FACTOR }`           | Compression factor. (Might be bitrate, depending on the file type.) See [SoX format docs](http://sox.sourceforge.net/soxformat.html) for more info. |
 |   X   |    ✓  | `{ 'add-comment': TEXT }`                            | Append output file comment                                |
 |   X   |    ✓  | `{ comment: TEXT }`                                  | Specify comment text for the output file                  |
 |   X   |    ✓  | `{ 'comment-file': FILENAME }`                       | File containing comment text for the output file          |

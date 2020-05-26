@@ -73,7 +73,7 @@ declare namespace Sox {
         "norm"?: boolean;
         "play-rate-arg"?: string;
         "plot"?: "gnuplot" | "octave";
-        "replay-gain": "track" | "album" | "off";
+        "replay-gain"?: "track" | "album" | "off";
         "single-threaded"?: boolean;
         "temp"?: string;
         "R"?: boolean;

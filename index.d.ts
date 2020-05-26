@@ -27,7 +27,6 @@ declare namespace Sox {
     export type Effect = string | string[];
 
     export interface StreamOptions {
-        "type"?: string;
         "bits"?: number;
         "encoding"?: Encoding;
         "reverse-nibbles"?: boolean;
@@ -49,12 +48,14 @@ declare namespace Sox {
     }
 
     export interface InputOptions extends StreamOptions {
+        "type"?: string;
         "ignore-length"?: boolean;
         "volume"?: number;
         "v"?: number;
     }
 
     export interface OutputOptions extends StreamOptions  {
+        "type": string;
         "comment"?: string;
         "add-comment"?: string;
         "comment-file"?: string;

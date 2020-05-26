@@ -1,6 +1,6 @@
 {
   "name": "sox-stream",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "A stream wrapper around SoX",
   "main": "index.js",
   "scripts": {

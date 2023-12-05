@@ -95,13 +95,13 @@ Currently, `sox-stream` only supports one input file, so some of these options d
 | `'-M'`, `{ M: true }`, `{ combine: 'merge' }`      | Merge multiple input files (instead of concatenating)            |
 | `'-T'`, `{ T: true }`, `{ combine: 'multiply' }`   | Multiply samples of corresponding channels from all input files (instead of concatenating) |
 | `'-D'`, `{ D: true }`, `{ 'no-dither': true }`     | Don't dither automatically                                       |
-| `{ 'effects-file': FILENAME }`                       | File containing effects and options                              |
+| `{ 'effects-file': FILENAME }`                     | File containing effects and options                              |
 | `'-G'`, `{ G: true }`, `{ guard: true }`           | Use temporary files to guard against clipping                    |
 | `{ input-buffer: BYTES }`                          | Override the input buffer size (default: same as --buffer; 8192) |
 | `'--norm'`, `{ norm: true }`                       | Guard (see --guard) & normalise                                  |
 | `{ play-rate-arg: ARG }`                           | Default `rate` argument for auto-resample with `play'            |
-| `{ plot: 'gnuplot'|'octave' }`                     | Generate script to plot response of filter effect                |
-| `{ 'replay-gain': 'track'|'album'|'off' }`           | Default: 'off' (sox, rec), track (play)                          |
+| `{ plot: 'gnuplot', 'octave' }`                    | Generate script to plot response of filter effect                |
+| `{ 'replay-gain': 'track', 'album', 'off' }`       | Default: 'off' (sox, rec), track (play)                          |
 | `'-R'`, `{ R: true }`                              | Use default random numbers (same on each run of SoX)             |
 | `'--single-threaded'`, `{ 'single-threaded': true }` | Disable parallel effects channels processing                     |
 | `{ temp: DIRECTORY }`                              | Specify the directory to use for temporary files                 |

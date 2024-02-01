@@ -7,7 +7,7 @@ sox-stream
 
 # Why
 
-The other implementations I found felt klunky to use. This module implements a streaming interface. (If you don't know how to use streams, I recommend reading the [stream handbook](https://github.com/substack/stream-handbook).)
+The other implementations I found felt klunky to use. This module implements a streaming interface. (If you don't know how to use streams, I recommend reading the [stream handbook][stream-handbook].)
 
 # Examples
 
@@ -218,7 +218,7 @@ I run the tests using [SoX 14.4.2][sox-1442], but other versions of SoX should w
 
 ### MP3
 
-- **Problem:** MP3 is [proprietary](https://en.wikipedia.org/wiki/LAME#Patents_and_legal_issues).
+- **Problem:** MP3 was [proprietary](https://en.wikipedia.org/wiki/LAME#Patents_and_legal_issues).
 - **Solution:** Compile the [LAME](http://lame.sourceforge.net/) encoder, and/or the [MAD](http://www.underbit.com/products/mad) decoder.
 - **Links:**
 	- [Windows (Precompiled)](https://github.com/EaterOfCode/sux/tree/master/win_libs)
@@ -231,6 +231,7 @@ I run the tests using [SoX 14.4.2][sox-1442], but other versions of SoX should w
 
 [MIT](http://choosealicense.com/licenses/mit/)
 
+[stream-handbook]: https://github.com/dmitriz/stream-handbook/blob/master/readme.markdown
 [sox-1442]: http://sourceforge.net/projects/sox/files/sox/14.4.2/
 [hta]:      https://github.com/ArtskydJ/hash-to-array
 [so-flac]:  http://stackoverflow.com/questions/23382500/how-to-install-flac-support-flac-libraries-to-sox-in-windows/25755799
